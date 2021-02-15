@@ -99,3 +99,23 @@ for i in gunViolenceDf.index:
 gunViolenceDf['Sub-region'] = subregion
 print(gunViolenceDf)
 # %%
+# create region lists
+NorthEast = ['New England', 'Mid Atlantic']
+Midwest = ['East North Central', 'West North Central']
+South = ['South Atlantic', 'East South Central', 'West South Central']
+West = ['Mountain', 'Pacific']
+# %%
+region = []
+# %%
+for i in gunViolenceDf.index:
+    if gunViolenceDf['Sub-region'][i] in NorthEast:
+        region.append('North East')
+    elif gunViolenceDf['Sub-region'][i] in Midwest:
+        region.append('Midwest')
+    elif gunViolenceDf['Sub-region'][i] in South:
+        region.append('South')
+    else:
+        region.append('West')
+# %%
+gunViolenceDf['Region'] = region
+print(gunViolenceDf.head())
