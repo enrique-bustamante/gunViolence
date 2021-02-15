@@ -31,7 +31,7 @@ print(gunViolenceDf.columns)
 
 # %%
 # Display plot showing ownership vs murder rate
-sns.scatterplot(data=gunViolenceDf, x='GunOwnership (%) (2013) [4]', y='GunMurder Rate (per 100,000) (2015)')
+sns.scatterplot(data=gunViolenceDf, x='Gun Ownership', y='Gun Murder Rate')
 # %%
 # with regressions
 sns.pairplot(gunViolenceDf, kind="reg")
@@ -58,6 +58,7 @@ plt.scatter(x=gunViolenceDf['Population'], y=gunViolenceDf['Gun Murder Rate'])
 # %%
 plt.scatter(x=gunViolenceDf['Murders'], y=gunViolenceDf['Gun Murders'])
 # %%
+# Create sub-region lists of states
 NewEngland = ['Connecticut', 'Maine', 'Massachusetts', 'New Hampshire', 'Rhode Island', 'Vermont']
 MidAtlantic = ['New Jersey', 'New York', 'Pennsylvania']
 EastNorthCentral = ['Illinois', 'Indiana', 'Michigan', 'Ohio', 'Wisconsin']
@@ -67,3 +68,34 @@ EastSouthCentral = ['Alabama', 'Kentucky', 'Mississippi', 'Tennessee']
 WestSouthCentral = ['Arkansas', 'Louisiana', 'Oklahoma', 'Texas']
 Mountain = ['Arizona', 'Colorado', 'Idaho', 'Montana', 'Nevada', 'New Mexico', 'Utah', 'Wyoming']
 Pacific = ['Alaska', 'California', 'Hawaii', 'Oregon', 'Washington']
+
+# %%
+subregion = []
+
+
+# %%
+# Run loop to add sub-regions
+for i in gunViolenceDf.index:
+    if gunViolenceDf['State'][i] in NewEngland:
+        subregion.append('New England')
+    elif gunViolenceDf['State'][i] in MidAtlantic:
+        subregion.append('Mid Atlantic')
+    elif gunViolenceDf['State'][i] in EastNorthCentral:
+        subregion.append('East North Central')
+    elif gunViolenceDf['State'][i] in WestNorthCentral:
+        subregion.append('West North Central')
+    elif gunViolenceDf['State'][i] in SouthAtlantic:
+        subregion.append('South Atlantic')
+    elif gunViolenceDf['State'][i] in EastSouthCentral:
+        subregion.append('East South Central')
+    elif gunViolenceDf['State'][i] in WestSouthCentral:
+        subregion.append('West South Central')
+    elif gunViolenceDf['State'][i] in Mountain:
+        subregion.append('Mountain')
+    else:
+        subregion.append('Pacific')
+    
+# %%
+gunViolenceDf['Sub-region'] = subregion
+print(gunViolenceDf)
+# %%
