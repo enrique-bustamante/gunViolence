@@ -27,7 +27,31 @@ columns = ['State', 'Population', 'Total Deaths', 'Murders', 'Gun Murders', 'Gun
 gunViolenceDf.columns = columns
 
 # %%
-print(gunViolenceDf.columns)
+print(gunViolenceDf.dtypes)
+
+# %%
+gunViolenceDf['Population'] = gunViolenceDf['Population'].replace("\[5]","",regex=True)
+gunViolenceDf['Population'] = gunViolenceDf['Population'].replace(",","",regex=True)
+gunViolenceDf['Population'] = gunViolenceDf['Population'].astype(int)
+
+# %%
+gunViolenceDf['Murders'] = gunViolenceDf['Murders'].replace("\D","",regex=True)
+gunViolenceDf['Gun Murders'] = gunViolenceDf['Gun Murders'].replace("\D","",regex=True)
+gunViolenceDf['Murders'] = gunViolenceDf['Murders'].replace("","0", regex=False)
+gunViolenceDf['Gun Murders'] = gunViolenceDf['Gun Murders'].replace("","0", regex=False)
+gunViolenceDf['Murders'] = gunViolenceDf['Murders'].astype(int)
+gunViolenceDf['Gun Murders'] = gunViolenceDf['Gun Murders'].astype(int)
+
+# %%
+gunViolenceDf['Murder Rate'] = gunViolenceDf['Murder Rate'].replace("\D","",regex=True)
+gunViolenceDf['Gun Murder Rate'] = gunViolenceDf['Gun Murder Rate'].replace("\D","",regex=True)
+gunViolenceDf['Murder Rate'] = gunViolenceDf['Murder Rate'].replace("","0", regex=False)
+gunViolenceDf['Gun Murder Rate'] = gunViolenceDf['Gun Murder Rate'].replace("","0", regex=False)
+gunViolenceDf['Murder Rate'] = gunViolenceDf['Murder Rate'].astype(float)
+gunViolenceDf['Gun Murder Rate'] = gunViolenceDf['Gun Murder Rate'].astype(float)
+print(gunViolenceDf.dtypes)
+
+
 
 # %%
 # Display plot showing ownership vs murder rate
@@ -119,3 +143,30 @@ for i in gunViolenceDf.index:
 # %%
 gunViolenceDf['Region'] = region
 print(gunViolenceDf.head())
+
+# %%
+gunViolenceDfSub = gunViolenceDf[['Sub-region', 'Population', 'Total Deaths', 'Murders', 'Gun Murders']]
+gunViolenceDfReg = gunViolenceDf[['Region', 'Population', 'Total Deaths', 'Murders', 'Gun Murders']]
+
+# %%
+print(gunViolenceDfSub.dtypes)
+
+# %%
+gunViolenceDfSubGroup = gunViolenceDfSub.groupby(['Sub-region']).sum()
+# %%
+gunViolenceDfRegGroup = gunViolenceDfReg.groupby(['Region']).sum()
+# %%
+# boxplot for all states
+plt.boxplot(x=gunViolenceDf['Murders'])
+plt.show()
+# %%
+sns.boxplot(y='Murders', x='Region', data=gunViolenceDf, palette='pastel', hue='Region')
+# %%
+sns.boxplot(y='Gun Murders', x='Region', data=gunViolenceDf, palette='muted', hue='Region')
+# %%
+ax = sns.boxplot(y='Gun Murders', x='Sub-region', data=gunViolenceDf, palette='colorblind', hue='Region')
+ax = sns.swarmplot(y='Gun Murders', x='Sub-region', data=gunViolenceDf, color="0.25", dodge=True)
+ax.set_xticklabels(ax.get_xticklabels(), rotation=90)
+plt.legend(bbox_to_anchor=(1.02,1), loc=2)
+plt.title("Gun Murder Statistics Broken Out by Sub-region")
+# %%
