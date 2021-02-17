@@ -52,10 +52,6 @@ gunViolenceDf['Gun Murder Rate'] = gunViolenceDf['Gun Murder Rate'].astype(float
 print(gunViolenceDf.dtypes)
 
 
-
-# %%
-# Display plot showing ownership vs murder rate
-sns.scatterplot(data=gunViolenceDf, x='Gun Ownership', y='Gun Murder Rate')
 # %%
 # with regressions
 sns.pairplot(gunViolenceDf, kind="reg")
@@ -168,5 +164,29 @@ ax = sns.boxplot(y='Gun Murders', x='Sub-region', data=gunViolenceDf, palette='c
 ax = sns.swarmplot(y='Gun Murders', x='Sub-region', data=gunViolenceDf, color="0.25", dodge=True)
 ax.set_xticklabels(ax.get_xticklabels(), rotation=90)
 plt.legend(bbox_to_anchor=(1.02,1), loc=2)
+plt.style.use('fivethirtyeight')
 plt.title("Gun Murder Statistics Broken Out by Sub-region")
+
+
+# %%
+# Display plot showing ownership vs murder rate
+sns.scatterplot(data=gunViolenceDf, x='Gun Ownership', y='Gun Murder Rate')
+sns.regplot(data=gunViolenceDf, x='Gun Ownership', y='Gun Murder Rate')
+plt.title("Gun Ownership compared to Gun Murder Rate")
+plt.style.use('fivethirtyeight')
+plt.savefig('gunMurdersVsGunOwnership.png')
+# %%
+ax = sns.boxplot(y='Gun Murder Rate', x='Sub-region', data=gunViolenceDf, palette='bright', hue='Region')
+ax = sns.swarmplot(y='Gun Murder Rate', x='Sub-region', data=gunViolenceDf, color="0.25", dodge=True)
+ax.set_xticklabels(ax.get_xticklabels(), rotation=90)
+plt.legend(bbox_to_anchor=(1.02,1), loc=2)
+plt.style.use('bmh')
+plt.title("Gun Murder Statistics Broken Out by Sub-region")
+# %%
+plt.style.use('fivethirtyeight')
+plt.hist(gunViolenceDf[gunViolenceDf['Region'] == 'North East']['Gun Murders'], color='red', alpha=0.5)
+plt.hist(gunViolenceDf[gunViolenceDf['Region'] == 'South']['Gun Murders'], color='green', alpha=0.5)
+plt.hist(gunViolenceDf[gunViolenceDf['Region'] == 'Midwest']['Gun Murders'], color='blue', alpha=0.5)
+plt.hist(gunViolenceDf[gunViolenceDf['Region'] == 'West']['Gun Murders'], color='purple', alpha=0.5)
+plt.show()
 # %%
