@@ -141,11 +141,14 @@ gunViolenceDf['Region'] = region
 print(gunViolenceDf.head())
 
 # %%
+gunViolenceDf['Gun Murder %'] = gunViolenceDf['Gun Murders']/gunViolenceDf['Murders']
+
+# %%
 gunViolenceDfSub = gunViolenceDf[['Sub-region', 'Population', 'Total Deaths', 'Murders', 'Gun Murders']]
 gunViolenceDfReg = gunViolenceDf[['Region', 'Population', 'Total Deaths', 'Murders', 'Gun Murders']]
 
 # %%
-print(gunViolenceDfSub.dtypes)
+
 
 # %%
 gunViolenceDfSubGroup = gunViolenceDfSub.groupby(['Sub-region']).sum()
@@ -188,5 +191,23 @@ plt.hist(gunViolenceDf[gunViolenceDf['Region'] == 'North East']['Gun Murders'], 
 plt.hist(gunViolenceDf[gunViolenceDf['Region'] == 'South']['Gun Murders'], color='green', alpha=0.5)
 plt.hist(gunViolenceDf[gunViolenceDf['Region'] == 'Midwest']['Gun Murders'], color='blue', alpha=0.5)
 plt.hist(gunViolenceDf[gunViolenceDf['Region'] == 'West']['Gun Murders'], color='purple', alpha=0.5)
+plt.show()
+# %%
+plt.style.use('fivethirtyeight')
+plt.hist(gunViolenceDf[gunViolenceDf['Region'] == 'North East']['Gun Murder Rate'], color='red', alpha=0.5)
+plt.hist(gunViolenceDf[gunViolenceDf['Region'] == 'South']['Gun Murder Rate'], color='green', alpha=0.5)
+plt.hist(gunViolenceDf[gunViolenceDf['Region'] == 'Midwest']['Gun Murder Rate'], color='blue', alpha=0.5)
+plt.hist(gunViolenceDf[gunViolenceDf['Region'] == 'West']['Gun Murder Rate'], color='purple', alpha=0.5)
+plt.legend(bbox_to_anchor=(1.02,1), loc=2)
+plt.show()
+# %%
+plt.hist(gunViolenceDf['Gun Murder %'])
+# %%
+plt.style.use('fivethirtyeight')
+plt.hist(gunViolenceDf[gunViolenceDf['Region'] == 'North East']['Gun Murder %'], color='red', alpha=0.5)
+plt.hist(gunViolenceDf[gunViolenceDf['Region'] == 'South']['Gun Murder %'], color='green', alpha=0.5)
+plt.hist(gunViolenceDf[gunViolenceDf['Region'] == 'Midwest']['Gun Murder %'], color='blue', alpha=0.5)
+plt.hist(gunViolenceDf[gunViolenceDf['Region'] == 'West']['Gun Murder %'], color='purple', alpha=0.5)
+plt.legend(bbox_to_anchor=(1.02,1), loc=2)
 plt.show()
 # %%
